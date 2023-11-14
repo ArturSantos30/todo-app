@@ -1,9 +1,23 @@
 import 'package:flutter/foundation.dart';
 
 import '../models/todo.dart';
+import '../services/todo_api.dart';
 
 class TodoController{
-  ValueNotifier<List<Todo>> todos = ValueNotifier([Todo(title: 'Task 1'),Todo(title: 'Task 2')]);
+  final TodoApi api;
+  ValueNotifier<List<Todo>?> todos = ValueNotifier(null);
 
+  TodoController(this.api){
+    getTodos();
+  }
+
+  void getTodos() async{
+    var response = await api.fetchTodos();
+    if (response == null){
+      todos.value = null;
+    } else {
+      todos.value = List.from(response).map((e) => Todo.fromJson(e)).toList();
+    }
+  }
 
 }
