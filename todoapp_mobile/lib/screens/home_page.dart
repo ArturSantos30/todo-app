@@ -22,8 +22,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView(
-        child: ValueListenableBuilder<List<Todo>?>(
+      body: ValueListenableBuilder<List<Todo>?>(
           valueListenable: _controller.todos,
           builder: (_, todos, __) {
             if (todos == null){
@@ -56,12 +55,13 @@ class _HomePageState extends State<HomePage> {
             );
           }
         ),
-      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        tooltip: 'Increment',
+        onPressed: (){
+          Navigator.pushNamed(context, "/create_todo", arguments: _controller);
+        },
+        tooltip: 'New Todo',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

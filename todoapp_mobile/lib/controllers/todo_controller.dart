@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../models/todo.dart';
 import '../services/todo_api.dart';
@@ -20,4 +21,7 @@ class TodoController{
     }
   }
 
+  void postTodos(Todo todo) async{
+    await api.postTodos(todo);
+  }
 }

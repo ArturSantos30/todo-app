@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp_mobile/screens/create_todo_page.dart';
 import 'package:todoapp_mobile/screens/home_page.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => const HomePage(),
+        "/create_todo": (context) => CreateTodoPage(),
       },
     );
   }
