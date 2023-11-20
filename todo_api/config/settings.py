@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-9m+gxgr1k5t07j!_x)sn(g(tb3d$(u(3uj5t#*@8a#39p61vm#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "192.168.100.117", "0.0.0.0"]
+ALLOWED_HOSTS = ["127.0.0.1", "192.168.100.117", "0.0.0.0", "localhost"]
 
 
 # Application definition
@@ -39,14 +39,23 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # "corsheaders",
     "rest_framework",
-    "api",
+    "rest_framework_simplejwt",
     "todos",
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    #
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
 }
 
 # CORS_ALLOWED_ORIGINS = [
