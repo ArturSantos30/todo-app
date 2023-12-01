@@ -3,6 +3,7 @@ import 'package:todoapp_mobile/controllers/todo_controller.dart';
 import 'package:todoapp_mobile/services/http_service.dart';
 
 import '../models/todo.dart';
+import '../services/login_http.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,6 +22,16 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Todo App"),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            onPressed: (){
+              LoginHTTP.logout().then((value) =>
+                  Navigator.pushReplacementNamed(context, '/login'));
+            },
+            icon: const Icon(Icons.output,),
+          ),
+          const SizedBox(width: 15,)
+        ],
       ),
       body: ValueListenableBuilder<List<Todo>?>(
           valueListenable: _controller.todos,

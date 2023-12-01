@@ -21,7 +21,12 @@ class TodoController{
     }
   }
 
-  void postTodos(Todo todo) async{
+  void postTodos(String title, String description) async{
+    Todo todo = Todo(
+      title: title,
+      description: description,
+    );
     await api.postTodos(todo);
+    getTodos();
   }
 }

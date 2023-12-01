@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp_mobile/models/todo.dart';
 
 import '../controllers/todo_controller.dart';
 
@@ -20,13 +19,11 @@ class CreateTodoPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
-            onPressed: () {
-              Todo todo = Todo(
-                  title: _titleController.text,
-                  description: _descriptionController.text,
+            onPressed: (){
+              todoController.postTodos(
+                _titleController.text,
+                _descriptionController.text,
               );
-              todoController.postTodos(todo);
-              todoController.getTodos();
               Navigator.pop(context);
             },
           ),

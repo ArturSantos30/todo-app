@@ -5,10 +5,12 @@ class Todo{
 
   Todo({this.id ,required this.title, required this.description});
 
-  Todo.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    title = json['title'];
-    description = json['description'];
+  factory Todo.fromJson(Map<String, dynamic> json){
+    return Todo(
+      id: json['id'],
+      title: json['title'],
+      description: json['description']
+    );
   }
 
   @override
