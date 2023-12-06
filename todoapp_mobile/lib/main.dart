@@ -4,6 +4,7 @@ import 'package:todoapp_mobile/screens/create_user_screen.dart';
 import 'package:todoapp_mobile/screens/home_page.dart';
 import 'package:todoapp_mobile/screens/login_screen.dart';
 import 'package:todoapp_mobile/screens/splash_screen.dart';
+import 'package:todoapp_mobile/screens/view_todo_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/signup': (context) => const CreateUserScreen(),
         "/create_todo": (context) => CreateTodoPage(),
+        "/view": (context) => const ViewTodoPage(),
       },
     );
   }

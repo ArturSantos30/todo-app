@@ -25,29 +25,42 @@ class HttpService implements TodoApi {
     );
     if (response.statusCode == 200) {
       return json.decode(response.body);
-    } else {
-      return null;
     }
+    return null;
   }
 
   @override
-  postTodos(Todo todo) async{
+  postTodos(Todo todo) async {
     String authToken = await getToken();
     final response = await http.post(
-      Uri.parse(APIConstants.postTodos),
+      Uri.parse(APIConstants.urlTodos),
       headers: {
         'Content-Type': APIConstants.contentType,
         'Authorization': 'Bearer $authToken',
       },
-      body: jsonEncode({
-        'title': todo.title,
-        'description': todo.description
-      }),
+      body: jsonEncode({'title': todo.title, 'description': todo.description}),
     );
     if (response.statusCode == 201) {
       return json.decode(response.body);
     } else {
       throw Exception('Failed to create todo.');
     }
+  }
+
+  @override
+  Future<bool> deleteTodo(int id) async {
+    String authToken = await getToken();
+    String url = '${APIConstants.urlTodos}$id/';
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': APIConstants.contentType,
+        'Authorization': 'Bearer $authToken',
+      },
+    );
+    if (response.statusCode == 204) {
+      return true;
+    }
+    return false;
   }
 }

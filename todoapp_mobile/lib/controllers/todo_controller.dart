@@ -29,4 +29,12 @@ class TodoController{
     await api.postTodos(todo);
     getTodos();
   }
+
+  Future<bool> deleteTodo(int id) async {
+    bool isDeleted = await api.deleteTodo(id);
+    if (isDeleted){
+      getTodos();
+    }
+    return isDeleted;
+  }
 }

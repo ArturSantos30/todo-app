@@ -60,21 +60,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 24.0),
               ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (_formKey.currentState!.validate()) {
-                    _loginController.login(
-                        username: _usernameController.text,
-                        password: _passwordController.text)
-                    .then((value){
-                        if (value) {
-                          Navigator.pushReplacementNamed(context, '/home');
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Something went wrong')),
-                          );
-                        }
+                    _loginController
+                        .login(
+                            username: _usernameController.text,
+                            password: _passwordController.text)
+                        .then((value) {
+                      if (value) {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Something went wrong')),
+                        );
+                      }
                     });
                   }
                 },

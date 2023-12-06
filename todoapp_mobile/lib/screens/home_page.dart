@@ -24,50 +24,56 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
-            onPressed: (){
-              LoginHTTP.logout().then((value) =>
-                  Navigator.pushReplacementNamed(context, '/login'));
+            onPressed: () {
+              LoginHTTP.logout().then(
+                  (value) => Navigator.pushReplacementNamed(context, '/login'));
             },
-            icon: const Icon(Icons.output,),
+            icon: const Icon(
+              Icons.output,
+            ),
           ),
-          const SizedBox(width: 15,)
+          const SizedBox(
+            width: 15,
+          )
         ],
       ),
       body: ValueListenableBuilder<List<Todo>?>(
           valueListenable: _controller.todos,
           builder: (_, todos, __) {
-            if (todos == null){
+            if (todos == null) {
               return const Center(
-                child: Text("Algo deu errado"),
+                child: CircularProgressIndicator(),
               );
             }
-            if (todos.isEmpty){
+            if (todos.isEmpty) {
               return const Center(
                 child: Text("Lista vazia"),
               );
             }
-            if (todos.isNotEmpty){
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: todos.length,
-                itemBuilder: (_, index){
-                  return Card(
-                    child: CheckboxListTile(
-                      title: Text(todos[index].title),
-                      value: false,
-                      onChanged: (bool? value) {  },
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: todos.length,
+              itemBuilder: (_, index) {
+                return Card(
+                  child: CheckboxListTile(
+                    title: GestureDetector(
+                      child: Text(todos[index].title),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/view', arguments: {
+                          'arg1': _controller,
+                          'arg2': todos[index],
+                        });
+                      },
                     ),
-                  );
-                },
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
+                    value: false,
+                    onChanged: (bool? value) {},
+                  ),
+                );
+              },
             );
-          }
-        ),
+          }),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.pushNamed(context, "/create_todo", arguments: _controller);
         },
         tooltip: 'New Todo',
