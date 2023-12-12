@@ -25,8 +25,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              LoginHTTP.logout().then(
-                  (value) => Navigator.pushReplacementNamed(context, '/login'));
+              LoginHTTP.logout().then((value) => Navigator.pushReplacementNamed(context, '/login'));
             },
             icon: const Icon(
               Icons.output,
@@ -65,8 +64,11 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-                    value: false,
-                    onChanged: (bool? value) {},
+                    value: todos[index].isDone,
+                    onChanged: (bool? value) async{
+                      Map data = {"is_done": value};
+                      await _controller.updateTodo(data, todos[index].id!);
+                    },
                   ),
                 );
               },

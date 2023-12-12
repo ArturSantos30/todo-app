@@ -17,7 +17,10 @@ class TodoController{
     if (response == null){
       todos.value = null;
     } else {
-      todos.value = List.from(response).map((e) => Todo.fromJson(e)).toList();
+      var tasksList = List.from(response).map((e) => Todo.fromJson(e)).toList();
+      var tasksDone = tasksList.where((task) => task.isDone == true).toList();
+      var tasksPending = tasksList.where((task) => task.isDone == false).toList();
+      todos.value =  tasksPending + tasksDone;
     }
   }
 
@@ -36,5 +39,13 @@ class TodoController{
       getTodos();
     }
     return isDeleted;
+  }
+
+  Future<bool> updateTodo(Map data, int id) async {
+    bool isUpdated = await api.updateTodo(data, id);
+    if (isUpdated){
+      getTodos();
+    }
+    return isUpdated;
   }
 }

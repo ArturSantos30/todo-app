@@ -58,9 +58,21 @@ class HttpService implements TodoApi {
         'Authorization': 'Bearer $authToken',
       },
     );
-    if (response.statusCode == 204) {
-      return true;
-    }
-    return false;
+    return (response.statusCode == 204)? true: false;
+  }
+
+  @override
+  Future<bool> updateTodo(Map data ,int id) async {
+    String authToken = await getToken();
+    String url = '${APIConstants.urlTodos}$id/';
+    final response = await http.patch(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': APIConstants.contentType,
+        'Authorization': 'Bearer $authToken',
+      },
+      body: jsonEncode(data),
+    );
+    return (response.statusCode == 200)? true: false;
   }
 }

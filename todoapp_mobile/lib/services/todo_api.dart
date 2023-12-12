@@ -4,4 +4,5 @@ abstract class TodoApi {
   fetchTodos();
   postTodos(Todo todo);
   deleteTodo(int id);
+  updateTodo(Map data, int id);
 }

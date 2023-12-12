@@ -9,6 +9,7 @@ class ViewTodoPage extends StatefulWidget {
 }
 
 class _ViewTodoPageState extends State<ViewTodoPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -28,13 +29,28 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
+              if (_formKey.currentState!.validate()){
+                Map data = {
+                  'title': _titleController.text,
+                  'description': _descriptionController.text
+                };
+                todoController.updateTodo(data, todo.id).then((value){
+                  if (value) {
+                    Navigator.pop(context);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Something went wrong')),
+                    );
+                  }
+                });
+              }
               // Navigator.pop(context);
             },
           ),
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              todoController.deleteTodo(todo.id).then((value) {
+              todoController.deleteTodo(todo.id).then((value){
                 if (value) {
                   Navigator.pop(context);
                 } else {
@@ -50,26 +66,29 @@ class _ViewTodoPageState extends State<ViewTodoPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Title',
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Title',
+                ),
+                controller: _titleController,
               ),
-              controller: _titleController,
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Description',
+              const SizedBox(height: 16.0),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Description',
+                ),
+                maxLines: 3,
+                controller: _descriptionController,
               ),
-              maxLines: 3,
-              controller: _descriptionController,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

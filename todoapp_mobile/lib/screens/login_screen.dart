@@ -63,11 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (_formKey.currentState!.validate()) {
-                    _loginController
-                        .login(
-                            username: _usernameController.text,
-                            password: _passwordController.text)
-                        .then((value) {
+                    _loginController.login(
+                      username: _usernameController.text,
+                      password: _passwordController.text)
+                    .then((value) {
                       if (value) {
                         Navigator.pushReplacementNamed(context, '/home');
                       } else {
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16.0),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/signup');
+                  Navigator.pushNamed(context, '/signup');
                 },
                 child: const Text('Create new account'),
               ),
